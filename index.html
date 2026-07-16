@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ohm's Law Simulator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .introduction {
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .formula {
+      text-align: center;
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .control-card {
+      padding: 20px;
+      border: 1px solid #d9e2ec;
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .value-display {
+      margin-top: 10px;
+      font-size: 1.25rem;
+    }
+
+    .circuit {
+      position: relative;
+      height: 220px;
+      margin: 30px 0;
+      border: 2px solid #52606d;
+      border-radius: 12px;
+      background: #f8fafc;
+      overflow: hidden;
+    }
+
+    .wire-top,
+    .wire-bottom {
+      position: absolute;
+      left: 90px;
+      right: 90px;
+      height: 6px;
+      background: #52606d;
+    }
+
+    .wire-top {
+      top: 55px;
+    }
+
+    .wire-bottom {
+      bottom: 55px;
+    }
+
+    .wire-left,
+    .wire-right {
+      position: absolute;
+      top: 55px;
+      bottom: 55px;
+      width: 6px;
+      background: #52606d;
+    }
+
+    .wire-left {
+      left: 90px;
+    }
+
+    .wire-right {
+      right: 90px;
+    }
+
+    .battery {
+      position: absolute;
+      left: 60px;
+      top: 82px;
+      width: 65px;
+      height: 60px;
+      background: white;
+      border: 2px solid #52606d;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .resistor {
+      position: absolute;
+      right: 42px;
+      top: 82px;
+      width: 100px;
+      height: 60px;
+      background: #e6b566;
+      border: 2px solid #52606d;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .electron {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #2563eb;
+      box-shadow: 0 0 8px rgba(37, 99, 235, 0.7);
+      left: 90px;
+      top: 48px;
+      animation-name: moveAroundCircuit;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    .electron:nth-child(7) {
+      animation-delay: -0.8s;
+    }
+
+    .electron:nth-child(8) {
+      animation-delay: -1.6s;
+    }
+
+    .electron:nth-child(9) {
+      animation-delay: -2.4s;
+    }
+
+    .electron:nth-child(10) {
+      animation-delay: -3.2s;
+    }
+
+    @keyframes moveAroundCircuit {
+      0% {
+        left: 90px;
+        top: 48px;
+      }
+
+      25% {
+        left: calc(100% - 100px);
+        top: 48px;
+      }
+
+      50% {
+        left: calc(100% - 100px);
+        top: 158px;
+      }
+
+      75% {
+        left: 90px;
+        top: 158px;
+      }
+
+      100% {
+        left: 90px;
+        top: 48px;
+      }
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .result-card {
+      padding: 18px;
+      text-align: center;
+      border-radius: 10px;
+      background: #eaf2f8;
+      border: 1px solid #bcccdc;
+    }
+
+    .result-label {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .result-value {
+      font-size: 1.4rem;
+    }
+
+    .explanation {
+      margin-top: 24px;
+      padding: 18px;
+      border-left: 5px solid #52606d;
+      background: #f8fafc;
+      line-height: 1.6;
+    }
+
+    .warning {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fff4e5;
+      border: 1px solid #f0b429;
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .controls,
+      .results {
+        grid-template-columns: 1fr;
+      }
+
+      .circuit {
+        height: 200px;
+      }
+
+      .wire-top {
+        top: 45px;
+      }
+
+      .wire-bottom {
+        bottom: 45px;
+      }
+
+      .wire-left,
+      .wire-right {
+        top: 45px;
+        bottom: 45px;
+      }
+
+      .battery,
+      .resistor {
+        top: 70px;
+      }
+
+      .electron {
+        top: 38px;
+      }
+
+      @keyframes moveAroundCircuit {
+        0% {
+          left: 90px;
+          top: 38px;
+        }
+
+        25% {
+          left: calc(100% - 100px);
+          top: 38px;
+        }
+
+        50% {
+          left: calc(100% - 100px);
+          top: 148px;
+        }
+
+        75% {
+          left: 90px;
+          top: 148px;
+        }
+
+        100% {
+          left: 90px;
+          top: 38px;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Ohm's Law Simulator</h1>
+
+    <div class="introduction">
+      Adjust the voltage and resistance sliders. Observe how the current changes.
+
+      Ohm's Law describes the relationship between voltage, current, and resistance.
+    </div>
+
+    <div class="formula">
+      I = V ÷ R
+    </div>
+
+    <section class="controls">
+      <div class="control-card">
+        <label for="voltageSlider">
+          Voltage
+        </label>
+
+        <input
+          type="range"
+          id="voltageSlider"
+          min="0"
+          max="12"
+          step="0.5"
+          value="6"
+        >
+
+        <div class="value-display">
+          <span id="voltageValue">6.0</span> V
+        </div>
+      </div>
+
+      <div class="control-card">
+        <label for="resistanceSlider">
+          Resistance
+        </label>
+
+        <input
+          type="range"
+          id="resistanceSlider"
+          min="10"
+          max="1000"
+          step="10"
+          value="220"
+        >
+
+        <div class="value-display">
+          <span id="resistanceValue">220</span> Ω
+        </div>
+      </div>
+    </section>
+
+    <section class="circuit" aria-label="Simple circuit animation">
+      <div class="wire-top"></div>
+      <div class="wire-bottom"></div>
+      <div class="wire-left"></div>
+      <div class="wire-right"></div>
+
+      <div class="battery">
+        Power<br>source
+      </div>
+
+      <div class="resistor">
+        Resistor
+      </div>
+
+      <div class="electron"></div>
+      <div class="electron"></div>
+      <div class="electron"></div>
+      <div class="electron"></div>
+    </section>
+
+    <section class="results">
+      <div class="result-card">
+        <div class="result-label">Voltage</div>
+        <div class="result-value">
+          <span id="resultVoltage">6.0</span> V
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Resistance</div>
+        <div class="result-value">
+          <span id="resultResistance">220</span> Ω
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Current</div>
+        <div class="result-value">
+          <span id="currentValue">27.3</span> mA
+        </div>
+      </div>
+    </section>
+
+    <div class="explanation" id="explanation">
+      Increasing voltage increases current. Increasing resistance decreases current.
+    </div>
+
+    <div class="warning" id="warning">
+      The current is above 20 mA. This may be too high for a standard LED unless the circuit is designed for it.
+    </div>
+  </main>
+
+  <script>
+    const voltageSlider = document.getElementById("voltageSlider");
+    const resistanceSlider = document.getElementById("resistanceSlider");
+
+    const voltageValue = document.getElementById("voltageValue");
+    const resistanceValue = document.getElementById("resistanceValue");
+
+    const resultVoltage = document.getElementById("resultVoltage");
+    const resultResistance = document.getElementById("resultResistance");
+    const currentValue = document.getElementById("currentValue");
+
+    const explanation = document.getElementById("explanation");
+    const warning = document.getElementById("warning");
+
+    const electrons = document.querySelectorAll(".electron");
+
+    function updateSimulator() {
+      const voltage = Number(voltageSlider.value);
+      const resistance = Number(resistanceSlider.value);
+
+      const currentAmps = voltage / resistance;
+      const currentMilliamps = currentAmps * 1000;
+
+      voltageValue.textContent = voltage.toFixed(1);
+      resistanceValue.textContent = resistance.toFixed(0);
+
+      resultVoltage.textContent = voltage.toFixed(1);
+      resultResistance.textContent = resistance.toFixed(0);
+      currentValue.textContent = currentMilliamps.toFixed(1);
+
+      let animationDuration;
+
+      if (currentMilliamps <= 0) {
+        animationDuration = 20;
+      } else {
+        animationDuration = Math.max(
+          1.2,
+          Math.min(12, 100 / currentMilliamps)
+        );
+      }
+
+      electrons.forEach(function (electron) {
+        electron.style.animationDuration = animationDuration + "s";
+        electron.style.opacity = currentMilliamps > 0 ? "1" : "0";
+      });
+
+      if (voltage === 0) {
+        explanation.textContent =
+          "There is no voltage, so no current flows through the circuit.";
+      } else if (currentMilliamps < 10) {
+        explanation.textContent =
+          "The current is relatively low because the voltage is low, the resistance is high, or both.";
+      } else if (currentMilliamps <= 20) {
+        explanation.textContent =
+          "The current is within a typical operating range for a standard LED.";
+      } else {
+        explanation.textContent =
+          "The current is high. Increasing the resistance would reduce the current.";
+      }
+
+      warning.style.display =
+        currentMilliamps > 20 ? "block" : "none";
+    }
+
+    voltageSlider.addEventListener("input", updateSimulator);
+    resistanceSlider.addEventListener("input", updateSimulator);
+
+    updateSimulator();
+  </script>
+</body>
+</html>
