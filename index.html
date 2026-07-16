@@ -13,55 +13,59 @@
 
     body {
       margin: 0;
-      padding: 24px;
+      padding: 18px;
       font-family: Arial, sans-serif;
       background: #f4f6f8;
       color: #1f2933;
     }
 
-    .container {
-      max-width: 900px;
+    .simulator {
+      max-width: 920px;
       margin: 0 auto;
-      background: white;
-      padding: 28px;
+      padding: 22px;
+      background: #ffffff;
       border-radius: 14px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
     }
 
     h1 {
-      margin-top: 0;
+      margin: 0 0 8px;
       text-align: center;
+      font-size: 2rem;
     }
 
-    .introduction {
-      line-height: 1.6;
-      margin-bottom: 24px;
+    .intro {
+      margin: 0 auto 18px;
+      max-width: 760px;
+      text-align: center;
+      line-height: 1.5;
     }
 
     .formula {
+      margin-bottom: 20px;
       text-align: center;
-      font-size: 2rem;
-      margin: 20px 0;
+      font-size: 1.8rem;
     }
 
     .controls {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-bottom: 28px;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
     }
 
     .control-card {
-      padding: 20px;
+      padding: 16px;
       border: 1px solid #d9e2ec;
       border-radius: 10px;
       background: #f8fafc;
     }
 
-    label {
+    .control-card label {
       display: block;
-      margin-bottom: 12px;
-      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
     }
 
     input[type="range"] {
@@ -69,256 +73,196 @@
       cursor: pointer;
     }
 
-    .value-display {
-      margin-top: 10px;
-      font-size: 1.25rem;
+    .slider-value {
+      margin-top: 8px;
+      font-size: 1.2rem;
     }
 
-    .circuit {
-      position: relative;
-      height: 220px;
-      margin: 30px 0;
-      border: 2px solid #52606d;
+    .switch-card {
+      min-width: 145px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .switch-button {
+      width: 110px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 9px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: #d9e2ec;
+      color: #1f2933;
+    }
+
+    .switch-button.closed {
+      background: #d6f5df;
+    }
+
+    .switch-status {
+      margin-top: 9px;
+      font-size: 0.95rem;
+    }
+
+    .circuit-card {
+      padding: 12px;
+      border: 1px solid #d9e2ec;
       border-radius: 12px;
       background: #f8fafc;
-      overflow: hidden;
     }
 
-    .wire-top,
-    .wire-bottom {
-      position: absolute;
-      left: 90px;
-      right: 90px;
-      height: 6px;
-      background: #52606d;
+    .circuit-svg {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
-    .wire-top {
-      top: 55px;
+    .wire {
+      fill: none;
+      stroke: #52606d;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
-    .wire-bottom {
-      bottom: 55px;
+    .battery-body {
+      fill: #ffffff;
+      stroke: #52606d;
+      stroke-width: 3;
     }
 
-    .wire-left,
-    .wire-right {
-      position: absolute;
-      top: 55px;
-      bottom: 55px;
-      width: 6px;
-      background: #52606d;
+    .battery-terminal {
+      stroke: #52606d;
+      stroke-width: 4;
+      stroke-linecap: round;
     }
 
-    .wire-left {
-      left: 90px;
+    .component-label {
+      font-size: 16px;
+      fill: #1f2933;
+      text-anchor: middle;
     }
 
-    .wire-right {
-      right: 90px;
+    .small-label {
+      font-size: 13px;
+      fill: #52606d;
+      text-anchor: middle;
     }
 
-    .battery {
-      position: absolute;
-      left: 60px;
-      top: 82px;
-      width: 65px;
-      height: 60px;
-      background: white;
-      border: 2px solid #52606d;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
+    .resistor-body {
+      fill: #d8b06a;
+      stroke: #52606d;
+      stroke-width: 3;
+      transition: fill 0.25s, filter 0.25s;
     }
 
-    .resistor {
-      position: absolute;
-      right: 42px;
-      top: 82px;
-      width: 100px;
-      height: 60px;
-      background: #e6b566;
-      border: 2px solid #52606d;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 0.9rem;
+    .switch-line {
+      stroke: #52606d;
+      stroke-width: 7;
+      stroke-linecap: round;
+      transition: transform 0.25s;
+      transform-origin: 420px 65px;
     }
 
-    .electron {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: #2563eb;
-      box-shadow: 0 0 8px rgba(37, 99, 235, 0.7);
-      left: 90px;
-      top: 48px;
-      animation-name: moveAroundCircuit;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    .electron:nth-child(7) {
-      animation-delay: -0.8s;
-    }
-
-    .electron:nth-child(8) {
-      animation-delay: -1.6s;
-    }
-
-    .electron:nth-child(9) {
-      animation-delay: -2.4s;
-    }
-
-    .electron:nth-child(10) {
-      animation-delay: -3.2s;
-    }
-
-    @keyframes moveAroundCircuit {
-      0% {
-        left: 90px;
-        top: 48px;
-      }
-
-      25% {
-        left: calc(100% - 100px);
-        top: 48px;
-      }
-
-      50% {
-        left: calc(100% - 100px);
-        top: 158px;
-      }
-
-      75% {
-        left: 90px;
-        top: 158px;
-      }
-
-      100% {
-        left: 90px;
-        top: 48px;
-      }
+    .charge {
+      fill: #2563eb;
+      filter: drop-shadow(0 0 5px rgba(37, 99, 235, 0.75));
     }
 
     .results {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 24px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
     }
 
     .result-card {
-      padding: 18px;
+      padding: 14px 10px;
       text-align: center;
-      border-radius: 10px;
-      background: #eaf2f8;
       border: 1px solid #bcccdc;
+      border-radius: 10px;
+      background: #eef4f8;
     }
 
     .result-label {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
+      margin-bottom: 7px;
+      font-size: 0.9rem;
     }
 
     .result-value {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+    }
+
+    .calculation {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border-left: 5px solid #52606d;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    .calculation-line {
+      font-size: 1.15rem;
     }
 
     .explanation {
-      margin-top: 24px;
-      padding: 18px;
-      border-left: 5px solid #52606d;
-      background: #f8fafc;
-      line-height: 1.6;
-    }
-
-    .warning {
-      margin-top: 18px;
+      margin-top: 14px;
       padding: 14px;
-      border-radius: 8px;
-      background: #fff4e5;
-      border: 1px solid #f0b429;
-      display: none;
+      border-radius: 10px;
+      background: #fffdf5;
+      border: 1px solid #e4cf83;
+      line-height: 1.5;
     }
 
-    @media (max-width: 700px) {
-      .controls,
-      .results {
+    .energy-note {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #52606d;
+    }
+
+    @media (max-width: 760px) {
+      .controls {
         grid-template-columns: 1fr;
       }
 
-      .circuit {
-        height: 200px;
+      .switch-card {
+        min-width: 0;
       }
 
-      .wire-top {
-        top: 45px;
+      .results {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
       }
 
-      .wire-bottom {
-        bottom: 45px;
+      .simulator {
+        padding: 14px;
       }
 
-      .wire-left,
-      .wire-right {
-        top: 45px;
-        bottom: 45px;
-      }
-
-      .battery,
-      .resistor {
-        top: 70px;
-      }
-
-      .electron {
-        top: 38px;
-      }
-
-      @keyframes moveAroundCircuit {
-        0% {
-          left: 90px;
-          top: 38px;
-        }
-
-        25% {
-          left: calc(100% - 100px);
-          top: 38px;
-        }
-
-        50% {
-          left: calc(100% - 100px);
-          top: 148px;
-        }
-
-        75% {
-          left: 90px;
-          top: 148px;
-        }
-
-        100% {
-          left: 90px;
-          top: 38px;
-        }
+      .results {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
+  <main class="simulator">
     <h1>Ohm's Law Simulator</h1>
 
-    <div class="introduction">
-      Adjust the voltage and resistance sliders. Observe how the current changes.
-
-      Ohm's Law describes the relationship between voltage, current, and resistance.
-    </div>
+    <p class="intro">
+      Adjust the voltage and resistance. Observe how the current and power change.
+      Charge flows steadily around a complete circuit and does not slow down at the resistor or power source.
+    </p>
 
     <div class="formula">
       I = V ÷ R
@@ -326,9 +270,7 @@
 
     <section class="controls">
       <div class="control-card">
-        <label for="voltageSlider">
-          Voltage
-        </label>
+        <label for="voltageSlider">Voltage</label>
 
         <input
           type="range"
@@ -339,15 +281,13 @@
           value="6"
         >
 
-        <div class="value-display">
-          <span id="voltageValue">6.0</span> V
+        <div class="slider-value">
+          <span id="voltageDisplay">6.0</span> V
         </div>
       </div>
 
       <div class="control-card">
-        <label for="resistanceSlider">
-          Resistance
-        </label>
+        <label for="resistanceSlider">Resistance</label>
 
         <input
           type="range"
@@ -358,35 +298,189 @@
           value="220"
         >
 
-        <div class="value-display">
-          <span id="resistanceValue">220</span> Ω
+        <div class="slider-value">
+          <span id="resistanceDisplay">220</span> Ω
+        </div>
+      </div>
+
+      <div class="control-card switch-card">
+        <button
+          id="switchButton"
+          class="switch-button closed"
+          type="button"
+          aria-pressed="true"
+        >
+          Open switch
+        </button>
+
+        <div id="switchStatus" class="switch-status">
+          Circuit closed
         </div>
       </div>
     </section>
 
-    <section class="circuit" aria-label="Simple circuit animation">
-      <div class="wire-top"></div>
-      <div class="wire-bottom"></div>
-      <div class="wire-left"></div>
-      <div class="wire-right"></div>
+    <section class="circuit-card">
+      <svg
+        id="circuitSvg"
+        class="circuit-svg"
+        viewBox="0 0 800 280"
+        role="img"
+        aria-label="A simple series circuit containing a power source, switch, and resistor"
+      >
+        <path
+          id="chargePath"
+          d="M 130 65
+             L 400 65
+             L 670 65
+             L 670 215
+             L 130 215
+             L 130 65"
+          fill="none"
+          stroke="none"
+        ></path>
 
-      <div class="battery">
-        Power<br>source
-      </div>
+        <path
+          class="wire"
+          d="M 130 65 L 400 65"
+        ></path>
 
-      <div class="resistor">
-        Resistor
-      </div>
+        <path
+          class="wire"
+          d="M 470 65 L 670 65 L 670 215"
+        ></path>
 
-      <div class="electron"></div>
-      <div class="electron"></div>
-      <div class="electron"></div>
-      <div class="electron"></div>
+        <path
+          class="wire"
+          d="M 670 215 L 520 215"
+        ></path>
+
+        <path
+          class="wire"
+          d="M 390 215 L 130 215"
+        ></path>
+
+        <path
+          class="wire"
+          d="M 130 215 L 130 165"
+        ></path>
+
+        <path
+          class="wire"
+          d="M 130 115 L 130 65"
+        ></path>
+
+        <line
+          class="wire"
+          x1="400"
+          y1="65"
+          x2="420"
+          y2="65"
+        ></line>
+
+        <line
+          class="wire"
+          x1="450"
+          y1="65"
+          x2="470"
+          y2="65"
+        ></line>
+
+        <circle
+          cx="420"
+          cy="65"
+          r="6"
+          fill="#52606d"
+        ></circle>
+
+        <circle
+          cx="450"
+          cy="65"
+          r="6"
+          fill="#52606d"
+        ></circle>
+
+        <line
+          id="switchLine"
+          class="switch-line"
+          x1="420"
+          y1="65"
+          x2="450"
+          y2="65"
+        ></line>
+
+        <rect
+          class="battery-body"
+          x="88"
+          y="115"
+          width="84"
+          height="50"
+          rx="7"
+        ></rect>
+
+        <line
+          class="battery-terminal"
+          x1="116"
+          y1="126"
+          x2="116"
+          y2="154"
+        ></line>
+
+        <line
+          class="battery-terminal"
+          x1="142"
+          y1="120"
+          x2="142"
+          y2="160"
+        ></line>
+
+        <text
+  class="component-label"
+  x="130"
+  y="195"
+>
+  Power source
+</text>
+
+        <rect
+          id="resistorBody"
+          class="resistor-body"
+          x="390"
+          y="187"
+          width="130"
+          height="56"
+          rx="8"
+        ></rect>
+
+        <text
+  class="component-label"
+  x="455"
+  y="220"
+>
+  Resistor
+</text>
+        <text
+          class="component-label"
+          x="435"
+          y="36"
+        >
+          Switch
+        </text>
+
+                <g id="charges">
+          <circle class="charge" r="8"></circle>
+          <circle class="charge" r="8"></circle>
+          <circle class="charge" r="8"></circle>
+          <circle class="charge" r="8"></circle>
+          <circle class="charge" r="8"></circle>
+          <circle class="charge" r="8"></circle>
+        </g>
+      </svg>
     </section>
 
     <section class="results">
       <div class="result-card">
         <div class="result-label">Voltage</div>
+
         <div class="result-value">
           <span id="resultVoltage">6.0</span> V
         </div>
@@ -394,6 +488,7 @@
 
       <div class="result-card">
         <div class="result-label">Resistance</div>
+
         <div class="result-value">
           <span id="resultResistance">220</span> Ω
         </div>
@@ -401,18 +496,45 @@
 
       <div class="result-card">
         <div class="result-label">Current</div>
+
         <div class="result-value">
-          <span id="currentValue">27.3</span> mA
+          <span id="currentAmps">0.0273</span> A
+        </div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-label">Current</div>
+
+        <div class="result-value">
+          <span id="currentMilliamps">27.3</span> mA
         </div>
       </div>
     </section>
 
-    <div class="explanation" id="explanation">
+    <section class="calculation">
+      <div class="calculation-line">
+        I = V ÷ R
+      </div>
+
+      <div id="substitutionLine" class="calculation-line">
+        I = 6.0 ÷ 220
+      </div>
+
+      <div id="answerLine" class="calculation-line">
+        I = 0.0273 A = 27.3 mA
+      </div>
+
+      <div id="powerLine" class="calculation-line">
+        Resistor power: P = VI = 0.164 W
+      </div>
+    </section>
+
+    <div id="explanation" class="explanation">
       Increasing voltage increases current. Increasing resistance decreases current.
     </div>
 
-    <div class="warning" id="warning">
-      The current is above 20 mA. This may be too high for a standard LED unless the circuit is designed for it.
+    <div class="energy-note">
+      The moving markers represent continuous charge flow. Their speed is the same at every point in this series circuit.
     </div>
   </main>
 
@@ -420,70 +542,253 @@
     const voltageSlider = document.getElementById("voltageSlider");
     const resistanceSlider = document.getElementById("resistanceSlider");
 
-    const voltageValue = document.getElementById("voltageValue");
-    const resistanceValue = document.getElementById("resistanceValue");
+    const voltageDisplay = document.getElementById("voltageDisplay");
+    const resistanceDisplay = document.getElementById("resistanceDisplay");
 
     const resultVoltage = document.getElementById("resultVoltage");
     const resultResistance = document.getElementById("resultResistance");
-    const currentValue = document.getElementById("currentValue");
 
-    const explanation = document.getElementById("explanation");
-    const warning = document.getElementById("warning");
+    const currentAmpsDisplay = document.getElementById("currentAmps");
+    const currentMilliampsDisplay =
+      document.getElementById("currentMilliamps");
 
-    const electrons = document.querySelectorAll(".electron");
+    const substitutionLine =
+      document.getElementById("substitutionLine");
 
-    function updateSimulator() {
+    const answerLine =
+      document.getElementById("answerLine");
+
+    const powerLine =
+      document.getElementById("powerLine");
+
+    const explanation =
+      document.getElementById("explanation");
+
+    const resistorBody =
+      document.getElementById("resistorBody");
+
+    const switchButton =
+      document.getElementById("switchButton");
+
+    const switchStatus =
+      document.getElementById("switchStatus");
+
+    const switchLine =
+      document.getElementById("switchLine");
+
+    const chargePath =
+      document.getElementById("chargePath");
+
+    const charges =
+      Array.from(document.querySelectorAll(".charge"));
+
+    let circuitClosed = true;
+    let animationStart = performance.now();
+    let previousSpeed = 0;
+    let travelledDistance = 0;
+    let previousFrameTime = performance.now();
+
+    function formatAmps(value) {
+      if (value === 0) {
+        return "0.0000";
+      }
+
+      if (value < 0.001) {
+        return value.toFixed(5);
+      }
+
+      return value.toFixed(4);
+    }
+
+    function getCircuitValues() {
       const voltage = Number(voltageSlider.value);
       const resistance = Number(resistanceSlider.value);
 
-      const currentAmps = voltage / resistance;
+      const currentAmps =
+        circuitClosed ? voltage / resistance : 0;
+
       const currentMilliamps = currentAmps * 1000;
+      const power = voltage * currentAmps;
 
-      voltageValue.textContent = voltage.toFixed(1);
-      resistanceValue.textContent = resistance.toFixed(0);
-
-      resultVoltage.textContent = voltage.toFixed(1);
-      resultResistance.textContent = resistance.toFixed(0);
-      currentValue.textContent = currentMilliamps.toFixed(1);
-
-      let animationDuration;
-
-      if (currentMilliamps <= 0) {
-        animationDuration = 20;
-      } else {
-        animationDuration = Math.max(
-          1.2,
-          Math.min(12, 100 / currentMilliamps)
-        );
-      }
-
-      electrons.forEach(function (electron) {
-        electron.style.animationDuration = animationDuration + "s";
-        electron.style.opacity = currentMilliamps > 0 ? "1" : "0";
-      });
-
-      if (voltage === 0) {
-        explanation.textContent =
-          "There is no voltage, so no current flows through the circuit.";
-      } else if (currentMilliamps < 10) {
-        explanation.textContent =
-          "The current is relatively low because the voltage is low, the resistance is high, or both.";
-      } else if (currentMilliamps <= 20) {
-        explanation.textContent =
-          "The current is within a typical operating range for a standard LED.";
-      } else {
-        explanation.textContent =
-          "The current is high. Increasing the resistance would reduce the current.";
-      }
-
-      warning.style.display =
-        currentMilliamps > 20 ? "block" : "none";
+      return {
+        voltage,
+        resistance,
+        currentAmps,
+        currentMilliamps,
+        power
+      };
     }
 
-    voltageSlider.addEventListener("input", updateSimulator);
-    resistanceSlider.addEventListener("input", updateSimulator);
+    function updateResistorGlow(power) {
+      const glowStrength = Math.min(power / 1.2, 1);
+
+      const red = 216 + Math.round(39 * glowStrength);
+      const green = 176 - Math.round(90 * glowStrength);
+      const blue = 106 - Math.round(70 * glowStrength);
+
+      resistorBody.style.fill =
+        `rgb(${red}, ${green}, ${blue})`;
+
+      resistorBody.style.filter =
+        `drop-shadow(0 0 ${2 + glowStrength * 18}px
+        rgba(255, 120, 30, ${0.15 + glowStrength * 0.75}))`;
+    }
+
+    function updateExplanation(values) {
+      if (!circuitClosed) {
+        explanation.textContent =
+          "The switch is open, so the circuit is incomplete and no current flows.";
+        return;
+      }
+
+      if (values.voltage === 0) {
+        explanation.textContent =
+          "The circuit is closed, but there is no potential difference, so no current flows.";
+        return;
+      }
+
+      if (values.currentMilliamps < 10) {
+        explanation.textContent =
+          "The current is relatively low because the voltage is low, the resistance is high, or both.";
+        return;
+      }
+
+      if (values.currentMilliamps < 50) {
+        explanation.textContent =
+          "Current increases when voltage increases and decreases when resistance increases.";
+        return;
+      }
+
+      explanation.textContent =
+        "The current is relatively high because the voltage is large compared with the resistance.";
+    }
+
+    function updateSimulator() {
+      const values = getCircuitValues();
+
+      voltageDisplay.textContent =
+        values.voltage.toFixed(1);
+
+      resistanceDisplay.textContent =
+        values.resistance.toFixed(0);
+
+      resultVoltage.textContent =
+        values.voltage.toFixed(1);
+
+      resultResistance.textContent =
+        values.resistance.toFixed(0);
+
+      currentAmpsDisplay.textContent =
+        formatAmps(values.currentAmps);
+
+      currentMilliampsDisplay.textContent =
+        values.currentMilliamps.toFixed(1);
+
+      substitutionLine.textContent =
+        circuitClosed
+          ? `I = ${values.voltage.toFixed(1)} ÷ ${values.resistance.toFixed(0)}`
+          : "I = 0 A because the circuit is open";
+
+      answerLine.textContent =
+        `I = ${formatAmps(values.currentAmps)} A = ` +
+        `${values.currentMilliamps.toFixed(1)} mA`;
+
+      powerLine.textContent =
+        `Resistor power: P = VI = ${values.power.toFixed(3)} W`;
+
+      updateResistorGlow(values.power);
+      updateExplanation(values);
+    }
+
+    function getAnimationSpeed(currentMilliamps) {
+      if (!circuitClosed || currentMilliamps <= 0) {
+        return 0;
+      }
+
+      return Math.max(
+        20,
+        Math.min(220, currentMilliamps * 3.2)
+      );
+    }
+
+    function animateCharges(frameTime) {
+      const pathLength = chargePath.getTotalLength();
+      const values = getCircuitValues();
+
+      const speed =
+        getAnimationSpeed(values.currentMilliamps);
+
+      const elapsedSeconds =
+        (frameTime - previousFrameTime) / 1000;
+
+      previousFrameTime = frameTime;
+
+      if (speed > 0) {
+        travelledDistance += speed * elapsedSeconds;
+      }
+
+      charges.forEach(function (charge, index) {
+        if (speed === 0) {
+          charge.style.opacity = "0";
+          return;
+        }
+
+        charge.style.opacity = "1";
+
+        const spacing =
+          pathLength / charges.length;
+
+        const distance =
+          (travelledDistance + index * spacing) % pathLength;
+
+        const point =
+          chargePath.getPointAtLength(distance);
+
+        charge.setAttribute("cx", point.x);
+        charge.setAttribute("cy", point.y);
+      });
+
+      previousSpeed = speed;
+
+      requestAnimationFrame(animateCharges);
+    }
+
+    switchButton.addEventListener("click", function () {
+      circuitClosed = !circuitClosed;
+
+      if (circuitClosed) {
+        switchButton.textContent = "Open switch";
+        switchButton.classList.add("closed");
+        switchButton.setAttribute("aria-pressed", "true");
+
+        switchStatus.textContent = "Circuit closed";
+        switchLine.setAttribute("x2", "450");
+        switchLine.setAttribute("y2", "65");
+      } else {
+        switchButton.textContent = "Close switch";
+        switchButton.classList.remove("closed");
+        switchButton.setAttribute("aria-pressed", "false");
+
+        switchStatus.textContent = "Circuit open";
+        switchLine.setAttribute("x2", "447");
+        switchLine.setAttribute("y2", "42");
+      }
+
+      updateSimulator();
+    });
+
+    voltageSlider.addEventListener(
+      "input",
+      updateSimulator
+    );
+
+    resistanceSlider.addEventListener(
+      "input",
+      updateSimulator
+    );
 
     updateSimulator();
+    requestAnimationFrame(animateCharges);
   </script>
 </body>
 </html>
